@@ -6,6 +6,14 @@ require './environments'
 class Game < ActiveRecord::Base
 end
 
+before do
+  setupCORS()
+end
+
+def setupCORS
+  response.headers["Access-Control-Allow-Origin"] = "*"
+end
+
 get "/history" do
   games = Game.order("timestamp ASC")
   history = games.reduce([]) do |game_history, game|
