@@ -4,13 +4,12 @@ configure :development do
 end
 
 configure :production do
-  db = URI.parse(ENV['DATABASE_URL'])
   ActiveRecord::Base.establish_connection(
-    :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
-    :host     => db.host,
-    :username => db.user,
-    :password => db.password,
-    :database => db.path[1..-1],
+    :adapter  => 'postgresql',
+    :host     => ENV['RDS_HOSTNAME'],
+    :username => ENV['RDS_USERNAME'],
+    :password => ENV['RDS_PASSWORD'],
+    :database => ENV['RDS_DB_NAME'],
     :encoding => 'utf8'
   )
 end
