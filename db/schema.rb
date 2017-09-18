@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918100434) do
+ActiveRecord::Schema.define(version: 20170918103930) do
 
-  create_table "history", force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
     t.integer "player_id"
     t.string "board"
     t.datetime "timestamp"
