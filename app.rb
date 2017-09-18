@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
 end
 
 get "/history" do
-  games = Game.order("timestamp DESC")
+  games = Game.order("timestamp ASC")
   history = games.reduce([]) do |game_history, game|
     game_history << {:timestamp => game.timestamp, 
                      :board => game.board}
