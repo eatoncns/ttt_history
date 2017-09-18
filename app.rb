@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/json'
 require 'sinatra/activerecord'
+require 'json'
 require './environments'
 
 class Game < ActiveRecord::Base
@@ -18,16 +19,17 @@ get "/history" do
   games = Game.order("timestamp ASC")
   history = games.reduce([]) do |game_history, game|
     game_history << {:timestamp => game.timestamp, 
-                     :board => game.board}
+                     :board => game.board.split(',', -1)}
   end
   json :games => history
 end
 
 post "/history" do
+  input = JSON.parse(request.body.read)
   game = Game.new()
   game.player_id = 1
-  game.board = params['board']
-  game.timestamp= params['timestamp']
+  game.board = input['board'].join(',') 
+  game.timestamp = input['timestamp']
   game.save()
   halt 200
 end
