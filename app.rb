@@ -15,6 +15,11 @@ get "/history" do
   json :games => history
 end
 
-#post "/history" do
-
-#end
+post "/history" do
+  game = Game.new()
+  game.player_id = 1
+  game.board = params['board']
+  game.timestamp= params['timestamp']
+  game.save()
+  halt 200
+end
