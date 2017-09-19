@@ -15,6 +15,11 @@ def setupCORS
   response.headers["Access-Control-Allow-Origin"] = "*"
 end
 
+options '*' do
+  setupCORS()
+  halt 200
+end
+
 get "/history" do
   games = Game.order("timestamp ASC")
   history = games.reduce([]) do |game_history, game|
